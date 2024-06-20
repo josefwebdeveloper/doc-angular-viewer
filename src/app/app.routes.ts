@@ -1,8 +1,9 @@
 import { Routes } from '@angular/router';
-import {DocumentViewerComponent} from "./document-viewer/document-viewer.component";
+import {DocumentViewerComponent} from "./pages/document-viewer/document-viewer.component";
+import {HomeComponent} from "./pages/home/home.component";
 
 export const routes: Routes = [
+  { path: '', component: HomeComponent },
   { path: 'viewer/view/:id', component: DocumentViewerComponent },
-  { path: '', redirectTo: 'viewer/view/1', pathMatch: 'full' },
-  { path: '**', redirectTo: 'viewer/view/1' }
+  { path: '**', redirectTo: '' }
 ];

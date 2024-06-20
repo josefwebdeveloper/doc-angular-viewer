@@ -1,19 +1,20 @@
-import {Component, inject, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, inject, ChangeDetectionStrategy} from '@angular/core';
 import { CdkDrag, CdkDragEnd, DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { AnnotationService } from '../services/annotation.service';
+import { AnnotationService } from '../../services/annotation.service';
+import {Annotation} from "../../models/annotation";
 
 @Component({
   selector: 'app-annotation',
   standalone: true,
   imports: [CommonModule, DragDropModule, CdkDrag],
   templateUrl: './annotation.component.html',
-  styleUrls: ['./annotation.component.scss']
+  styleUrls: ['./annotation.component.scss'],
 })
 export class AnnotationComponent implements OnInit {
   @Input() document: any;
   @Input() zoomLevel: number = 100;
-  annotations: { type: string, text?: string, imageUrl?: string, x: number, y: number, pageIndex: number }[] = [];
+  annotations: Annotation[] = [];
   pageDimensions: { width: number, height: number }[] = [];
 
   private annotationService = inject(AnnotationService);

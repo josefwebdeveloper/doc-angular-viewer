@@ -1,7 +1,5 @@
 .page-container {
   position: relative;
-  width: 100%;
-  margin-bottom: 20px;
 }
 
 .annotation {
@@ -9,7 +7,6 @@
   cursor: move;
   display: flex;
   align-items: center;
-  transform: translate(-50%, -50%);
 }
 
 .annotation-text {
@@ -19,7 +16,7 @@
 }
 
 .annotation-image {
-  max-width: 200px;
+  max-width: 300px;
 }
 
 .annotation button {

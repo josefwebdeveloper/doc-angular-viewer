@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import {Annotation} from "../models/annotation";
-import {BehaviorSubject} from "rxjs";
+
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AnnotationService {
-
   private annotationsSubject = new BehaviorSubject<Annotation[]>([]);
   annotations$ = this.annotationsSubject.asObservable();
 
