@@ -6,13 +6,20 @@
 
 .annotation {
   position: absolute;
-  background: yellow;
-  padding: 5px;
-  border: 1px solid black;
   cursor: move;
   display: flex;
   align-items: center;
   transform: translate(-50%, -50%);
+}
+
+.annotation-text {
+  background: yellow;
+  padding: 5px;
+  border: 1px solid black;
+}
+
+.annotation-image {
+  max-width: 200px;
 }
 
 .annotation button {

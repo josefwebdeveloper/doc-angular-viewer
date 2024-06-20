@@ -5,7 +5,8 @@
     <button (click)="zoomIn()">+</button>
     <span>{{ zoomLevel }}%</span>
     <button (click)="saveAnnotations()">Save</button>
+    <input type="file" (change)="onFileSelected($event, 0)" accept="image/*">
   </div>
 
-  <app-annotation [document]="document" [zoomLevel]="zoomLevel" (annotationsChange)="onAnnotationsChange($event)"></app-annotation>
+  <app-annotation [document]="document" [zoomLevel]="zoomLevel"></app-annotation>
 </div>
