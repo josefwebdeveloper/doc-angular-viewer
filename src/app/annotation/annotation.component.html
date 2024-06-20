@@ -1,0 +1,11 @@
+<div *ngFor="let page of document.pages; let pageIndex = index" class="page-container">
+  <img [src]="'/assets/' + page.imageUrl" (load)="onPageLoad($event, pageIndex)" [style.width.%]="zoomLevel" [style.height.%]="zoomLevel"
+       (dblclick)="addAnnotation($event, pageIndex)">
+  <div *ngFor="let annotation of getAnnotationsForPage(pageIndex); let i = index"
+       class="annotation"
+       [ngStyle]="{'left': annotation.x + '%', 'top': annotation.y + '%'}"
+       cdkDrag [cdkDragData]="i" (cdkDragEnded)="onDragEnd($event, i)">
+    {{ annotation.text }}
+    <button (click)="removeAnnotation(i)">X</button>
+  </div>
+</div>

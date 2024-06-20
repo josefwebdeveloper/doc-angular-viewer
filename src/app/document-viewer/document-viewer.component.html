@@ -1,0 +1,11 @@
+<div *ngIf="document">
+  <div class="toolbar">
+    <span>{{ document.name }}</span>
+    <button (click)="zoomOut()">-</button>
+    <button (click)="zoomIn()">+</button>
+    <span>{{ zoomLevel }}%</span>
+    <button (click)="saveAnnotations()">Save</button>
+  </div>
+
+  <app-annotation [document]="document" [zoomLevel]="zoomLevel" (annotationsChange)="onAnnotationsChange($event)"></app-annotation>
+</div>

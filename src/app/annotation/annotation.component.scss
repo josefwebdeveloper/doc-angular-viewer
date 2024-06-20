@@ -1,0 +1,21 @@
+.page-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.annotation {
+  position: absolute;
+  background: yellow;
+  padding: 5px;
+  border: 1px solid black;
+  cursor: move;
+  display: flex;
+  align-items: center;
+  transform: translate(-50%, -50%);
+}
+
+.annotation button {
+  margin-left: 5px;
+  cursor: pointer;
+}
