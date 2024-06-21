@@ -1,4 +1,6 @@
-<div *ngFor="let page of document.pages; let pageIndex = index" [style.transform]="'scale(' + zoomLevel / 100 + ')'" class="page-container">
+<div *ngFor="let page of document()?.pages; let pageIndex = index"
+     [style.transform]="'scale(' + zoomLevel() / 100 + ')'"
+     class="page-container">
   <img [src]="'/assets/' + page.imageUrl" (load)="onPageLoad($event, pageIndex)"
        (click)="addTextAnnotation($event, pageIndex)" alt="image">
   <div *ngFor="let annotation of getAnnotationsForPage(pageIndex); let i = index"

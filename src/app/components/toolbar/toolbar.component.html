@@ -1,11 +1,11 @@
 <mat-toolbar class="toolbar" color="primary">
-  <span>{{ documentName }}</span>
+  <span>{{ documentName() }}</span>
   <button mat-icon-button (click)="zoomOut.emit()">
     <mat-icon>remove</mat-icon>
   </button>
   <button mat-icon-button (click)="zoomIn.emit()">
     <mat-icon>add</mat-icon>
   </button>
-  <span>{{ zoomLevel }}%</span>
+  <span>{{ zoomLevel() }}%</span>
   <button mat-button (click)="saveAnnotations.emit()">Save</button>
 </mat-toolbar>

@@ -1,11 +1,12 @@
-import {Component, Input, OnInit, inject} from '@angular/core';
+import {Component, Input, OnInit, inject, input} from '@angular/core';
 import {CdkDrag, CdkDragEnd, DragDropModule} from '@angular/cdk/drag-drop';
 import {CommonModule} from '@angular/common';
 import {AnnotationService} from '../../services/annotation.service';
 import {Annotation} from "../../models/annotation";
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {AnnotationDialogComponent} from '../annotation-dialog/annotation-dialog.component';
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
+import {DocumentData} from "../../models/documents";
 
 @Component({
   selector: 'app-annotation',
@@ -15,10 +16,10 @@ import { v4 as uuidv4 } from 'uuid';
   styleUrls: ['./annotation.component.scss'],
 })
 export class AnnotationComponent implements OnInit {
-  @Input() document: any;
-  @Input() zoomLevel: number = 100;
+  document = input<DocumentData>();
+  zoomLevel = input<number>(100);
   annotations: Annotation[] = [];
-  pageDimensions: { width: number, height: number }[] = [];
+  pageDimensions: { width: number; height: number }[] | undefined = [];
 
   private annotationService = inject(AnnotationService);
   private dialog = inject(MatDialog);
@@ -31,14 +32,16 @@ export class AnnotationComponent implements OnInit {
   }
 
   calculatePageDimensions(): void {
-    this.pageDimensions = this.document.pages.map(() => {
-      return { width: 0, height: 0 };
+    this.pageDimensions = this.document()?.pages.map(() => {
+      return {width: 0, height: 0};
     });
   }
 
   onPageLoad(event: Event, index: number): void {
     const img = event.target as HTMLImageElement;
-    this.pageDimensions[index] = { width: img.naturalWidth, height: img.naturalHeight };
+    if (this.pageDimensions !== undefined) {
+      this.pageDimensions[index] = {width: img.naturalWidth, height: img.naturalHeight};
+    }
   }
 
   addTextAnnotation(event: MouseEvent, pageIndex: number): void {
@@ -59,7 +62,7 @@ export class AnnotationComponent implements OnInit {
     const y = ((event.clientY - rect.top) / rect.height) * 100;
     const text = prompt('Enter annotation text:');
     if (text) {
-      this.annotationService.addAnnotation({ id: uuidv4(), type: 'text', text, x, y, pageIndex });
+      this.annotationService.addAnnotation({id: uuidv4(), type: 'text', text, x, y, pageIndex});
     }
   }
 
@@ -76,7 +79,7 @@ export class AnnotationComponent implements OnInit {
         const reader = new FileReader();
         reader.onload = (e: any) => {
           const imageUrl = e.target.result;
-          this.annotationService.addAnnotation({ id: uuidv4(), type: 'image', imageUrl, x, y, pageIndex });
+          this.annotationService.addAnnotation({id: uuidv4(), type: 'image', imageUrl, x, y, pageIndex});
         };
         reader.readAsDataURL(file);
       }
@@ -99,7 +102,7 @@ export class AnnotationComponent implements OnInit {
 
     const annotation = this.annotations.find(a => a.id === id);
     if (annotation) {
-      this.annotationService.updateAnnotation(id, { ...annotation, x, y });
+      this.annotationService.updateAnnotation(id, {...annotation, x, y});
     }
   }
 

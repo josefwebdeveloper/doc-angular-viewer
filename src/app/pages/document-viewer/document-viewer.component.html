@@ -1,10 +1,18 @@
-<app-toolbar
-  [zoomLevel]="zoomLevel"
-  (zoomIn)="zoomIn()"
-  (zoomOut)="zoomOut()"
-  (saveAnnotations)="saveAnnotations()">
-</app-toolbar>
+@defer () {
+  <app-toolbar
+    [documentName]="document.name"
+    [zoomLevel]="zoomLevel"
+    (zoomIn)="zoomIn()"
+    (zoomOut)="zoomOut()"
+    (saveAnnotations)="saveAnnotations()">
+  </app-toolbar>
 
-<div class="document-container" *ngIf="document">
-  <app-annotation [document]="document" [zoomLevel]="zoomLevel"></app-annotation>
-</div>
+  <div class="document-container" *ngIf="document">
+    <app-annotation [document]="document" [zoomLevel]="zoomLevel"></app-annotation>
+  </div>
+}
+@placeholder(minimum 1s) {
+  <div class="spinner-container">
+    <mat-spinner></mat-spinner>
+  </div>
+}

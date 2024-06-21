@@ -7,11 +7,12 @@ import {AnnotationComponent} from "../../components/annotation/annotation.compon
 import {DocumentData} from "../../models/documents";
 import {DocumentService} from "../../services/document.service";
 import {AnnotationService} from "../../services/annotation.service";
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
 
 @Component({
   selector: 'app-document-viewer',
   standalone: true,
-  imports: [CommonModule, AnnotationComponent, ToolbarComponent, ToolbarComponent],
+  imports: [CommonModule, AnnotationComponent, ToolbarComponent, ToolbarComponent, MatProgressSpinner],
   templateUrl: './document-viewer.component.html',
   styleUrls: ['./document-viewer.component.scss']
 })
@@ -28,6 +29,7 @@ export class DocumentViewerComponent implements OnInit {
     if (id) {
       this.documentService.getDocument(id).subscribe(data => {
         this.document = data;
+        console.log('Document loaded:', this.document)
       });
     }
   }

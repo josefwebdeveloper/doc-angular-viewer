@@ -1,7 +1,7 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { CommonModule } from '@angular/common';
+import {Component, Output, EventEmitter, Input, input, output} from '@angular/core';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {CommonModule} from '@angular/common';
 import {MatToolbar} from "@angular/material/toolbar";
 
 @Component({
@@ -12,12 +12,11 @@ import {MatToolbar} from "@angular/material/toolbar";
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent {
-  @Input() documentName!: string;
-  @Input() zoomLevel!: number;
-  @Output() zoomIn = new EventEmitter<void>();
-  @Output() zoomOut = new EventEmitter<void>();
-  @Output() saveAnnotations = new EventEmitter<void>();
-
+  documentName = input<string>();
+  zoomLevel = input<number>();
+  zoomIn = output<void>();
+  zoomOut = output<void>();
+  saveAnnotations = output<void>();
 
 
 }
