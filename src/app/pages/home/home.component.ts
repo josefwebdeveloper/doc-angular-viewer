@@ -10,7 +10,7 @@ import {ToolbarComponent} from "../../components/toolbar/toolbar.component";
     imports: [CommonModule, MatCardModule, RouterModule, ToolbarComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent {
   private router = inject(Router);

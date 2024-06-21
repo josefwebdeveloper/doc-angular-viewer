@@ -1,19 +1,21 @@
-import { Injectable, signal } from "@angular/core";
+import {Injectable, signal} from "@angular/core";
+
+export enum Theme {
+  Dark = "dark",
+  Light = "light"
+}
 
 @Injectable({
-	providedIn: "root",
+  providedIn: "root",
 })
 export class ThemeService {
 
-	themeSignal = signal<string>(window.localStorage.getItem('theme') || "dark");
+  themeSignal = signal<Theme>(window.localStorage.getItem('theme') as Theme || Theme.Dark);
 
-	setTheme(theme: string) {
-    window.localStorage.setItem('theme', theme);
-		this.themeSignal.set(theme);
-	}
 
-	updateTheme() {
-    window.localStorage.setItem('theme', this.themeSignal() === "dark" ? "light" : "dark");
-		this.themeSignal.update((value) => (value === "dark" ? "light" : "dark"));
-	}
+  updateTheme() {
+    const newTheme = this.themeSignal() === Theme.Dark ? Theme.Light : Theme.Dark;
+    window.localStorage.setItem('theme', newTheme);
+    this.themeSignal.set(newTheme);
+  }
 }
