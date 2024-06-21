@@ -1,13 +1,16 @@
-import {Component, Input, OnInit, inject, ChangeDetectionStrategy} from '@angular/core';
-import { CdkDrag, CdkDragEnd, DragDropModule } from '@angular/cdk/drag-drop';
-import { CommonModule } from '@angular/common';
-import { AnnotationService } from '../../services/annotation.service';
+import {Component, Input, OnInit, inject} from '@angular/core';
+import {CdkDrag, CdkDragEnd, DragDropModule} from '@angular/cdk/drag-drop';
+import {CommonModule} from '@angular/common';
+import {AnnotationService} from '../../services/annotation.service';
 import {Annotation} from "../../models/annotation";
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {AnnotationDialogComponent} from '../annotation-dialog/annotation-dialog.component';
 
 @Component({
   selector: 'app-annotation',
   standalone: true,
-  imports: [CommonModule, DragDropModule, CdkDrag],
+  imports: [CommonModule, DragDropModule, CdkDrag, MatDialogModule],
+
   templateUrl: './annotation.component.html',
   styleUrls: ['./annotation.component.scss'],
 })
@@ -18,6 +21,7 @@ export class AnnotationComponent implements OnInit {
   pageDimensions: { width: number, height: number }[] = [];
 
   private annotationService = inject(AnnotationService);
+  private dialog = inject(MatDialog);
 
   ngOnInit(): void {
     this.annotationService.annotations$.subscribe(annotations => {
@@ -38,6 +42,18 @@ export class AnnotationComponent implements OnInit {
   }
 
   addTextAnnotation(event: MouseEvent, pageIndex: number): void {
+    const dialogRef = this.dialog.open(AnnotationDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'text') {
+        this.addTextAnnotationContent(event, pageIndex);
+      } else if (result === 'image') {
+        this.addImageAnnotationContent(event, pageIndex);
+      }
+    });
+  }
+
+  addTextAnnotationContent(event: MouseEvent, pageIndex: number): void {
     const rect = (event.target as HTMLElement).getBoundingClientRect();
     const x = ((event.clientX - rect.left) / rect.width) * 100;
     const y = ((event.clientY - rect.top) / rect.height) * 100;
@@ -45,6 +61,27 @@ export class AnnotationComponent implements OnInit {
     if (text) {
       this.annotationService.addAnnotation({ type: 'text', text, x, y, pageIndex });
     }
+  }
+
+  addImageAnnotationContent(event: MouseEvent, pageIndex: number): void {
+    const rect = (event.target as HTMLElement).getBoundingClientRect();
+    const x = ((event.clientX - rect.left) / rect.width) * 100;
+    const y = ((event.clientY - rect.top) / rect.height) * 100;
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+    fileInput.onchange = (e: any) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          const imageUrl = e.target.result;
+          this.annotationService.addAnnotation({ type: 'image', imageUrl, x, y, pageIndex });
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+    fileInput.click();
   }
 
   removeAnnotation(index: number): void {
