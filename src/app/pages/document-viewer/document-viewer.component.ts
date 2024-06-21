@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {CommonModule} from '@angular/common';
 
@@ -8,6 +8,7 @@ import {DocumentData} from "../../models/documents";
 import {DocumentService} from "../../services/document.service";
 import {AnnotationService} from "../../services/annotation.service";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-document-viewer',
@@ -16,10 +17,10 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
   templateUrl: './document-viewer.component.html',
   styleUrls: ['./document-viewer.component.scss']
 })
-export class DocumentViewerComponent implements OnInit {
+export class DocumentViewerComponent implements OnInit, OnDestroy {
   document!: DocumentData;
   zoomLevel: number = 100;
-
+  subscription = new Subscription();
   private route = inject(ActivatedRoute);
   private documentService = inject(DocumentService);
   private annotationService = inject(AnnotationService);
@@ -49,5 +50,7 @@ export class DocumentViewerComponent implements OnInit {
     console.log('Annotations saved:', {document: this.document, annotations: this.annotationService.getAnnotations()});
   }
 
-
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 }
