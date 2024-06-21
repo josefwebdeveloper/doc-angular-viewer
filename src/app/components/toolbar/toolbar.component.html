@@ -1,0 +1,12 @@
+<mat-toolbar class="toolbar" color="primary">
+  <span>{{ documentName }}</span>
+  <button mat-icon-button (click)="zoomOut.emit()">
+    <mat-icon>remove</mat-icon>
+  </button>
+  <button mat-icon-button (click)="zoomIn.emit()">
+    <mat-icon>add</mat-icon>
+  </button>
+  <span>{{ zoomLevel }}%</span>
+  <button mat-button (click)="saveAnnotations.emit()">Save</button>
+  <input type="file" (change)="onFileSelected($event)" accept="image/*">
+</mat-toolbar>

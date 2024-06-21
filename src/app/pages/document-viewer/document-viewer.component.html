@@ -1,12 +1,11 @@
-<div *ngIf="document">
-  <div class="toolbar">
-    <span>{{ document.name }}</span>
-    <button (click)="zoomOut()">-</button>
-    <button (click)="zoomIn()">+</button>
-    <span>{{ zoomLevel }}%</span>
-    <button (click)="saveAnnotations()">Save</button>
-    <input type="file" (change)="onFileSelected($event, 0)" accept="image/*">
-  </div>
+<app-toolbar
+  [zoomLevel]="zoomLevel"
+  (zoomIn)="zoomIn()"
+  (zoomOut)="zoomOut()"
+  (saveAnnotations)="saveAnnotations()"
+  (fileSelected)="onFileSelected($event, 0)">
+</app-toolbar>
 
+<div class="document-container" *ngIf="document">
   <app-annotation [document]="document" [zoomLevel]="zoomLevel"></app-annotation>
 </div>

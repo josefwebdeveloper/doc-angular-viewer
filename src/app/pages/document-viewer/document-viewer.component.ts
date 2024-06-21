@@ -1,20 +1,19 @@
-import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
-import { DocumentService } from '../../services/document.service';
-import { AnnotationService } from '../../services/annotation.service';
-import { DocumentData } from "../../models/documents";
+import { CommonModule } from '@angular/common';
+
+import {ToolbarComponent} from "../../components/toolbar/toolbar.component";
 import {AnnotationComponent} from "../../components/annotation/annotation.component";
-import {NgIf} from "@angular/common";
+import {DocumentData} from "../../models/documents";
+import {DocumentService} from "../../services/document.service";
+import {AnnotationService} from "../../services/annotation.service";
 
 @Component({
   selector: 'app-document-viewer',
   standalone: true,
+  imports: [CommonModule, AnnotationComponent, ToolbarComponent, ToolbarComponent],
   templateUrl: './document-viewer.component.html',
-  imports: [
-    AnnotationComponent,
-    NgIf
-  ],
-  styleUrls: ['./document-viewer.component.scss'],
+  styleUrls: ['./document-viewer.component.scss']
 })
 export class DocumentViewerComponent implements OnInit {
   document!: DocumentData;
