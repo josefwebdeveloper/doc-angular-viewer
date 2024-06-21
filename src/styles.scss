@@ -28,3 +28,54 @@ body {
   .pt#{$i} { padding-top: $i * 4px; }
   .pb#{$i} { padding-bottom: $i * 4px; }
 }
+.card {
+  border-radius: 24px !important;
+}
+
+
+.light mat-card h2 {
+  color: #444
+}
+
+.light .mat-card {
+  color: #444;
+  text-decoration: none;
+  background: linear-gradient(135deg,#dbdbdb,#f4f4f4,#dbdbdb);
+  border-radius: .3rem;
+  box-shadow: 0 2px 1px -1px #0003,0 1px 1px #00000024,0 1px 3px #0000001f
+}
+
+.light .gradient-border {
+  outline: none;
+  background: padding-box linear-gradient(135deg,#dbdbdb,#f4f4f4,#dbdbdb),border-box linear-gradient(90deg,#d58eae,#ce93d8 51%,#aa5ccb);
+  border: .183rem solid transparent;
+  animation: borderAnimation 4s ease infinite
+}
+.dark mat-card {
+  background: linear-gradient(135deg,#222,#333,#222)
+}
+
+.dark mat-card h2 {
+  color: #d1c2cb
+}
+
+.dark .mat-card {
+  color: #d1c2cb;
+  text-decoration: none;
+  background: linear-gradient(135deg,#222,#333,#222);
+  border-radius: .3rem;
+  box-shadow: 0 2px 1px -1px #0003,0 1px 1px #00000024,0 1px 3px #0000001f
+}
+
+.dark app-projects .clear-btn {
+  color: #9b7194
+}
+
+
+
+.dark .gradient-border {
+  outline: none;
+  background: padding-box linear-gradient(135deg,#222,#333,#222),border-box linear-gradient(90deg,#cf5f91,#ce93d8 51%,#a354c1);
+  border: .183rem solid transparent;
+  animation: borderAnimation 4s ease infinite
+}

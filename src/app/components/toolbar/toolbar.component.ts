@@ -4,6 +4,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {CommonModule} from '@angular/common';
 import {MatToolbar} from "@angular/material/toolbar";
 import {Router} from "@angular/router";
+import {ThemeService} from "../../services/theme.service";
 
 @Component({
   selector: 'app-toolbar',
@@ -13,15 +14,19 @@ import {Router} from "@angular/router";
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent {
-  documentName = input<string>();
+  name = input<string>();
   zoomLevel = input<number>();
   zoomIn = output<void>();
   zoomOut = output<void>();
   saveAnnotations = output<void>();
   router = inject(Router);
+  themeService = inject(ThemeService);
 
 
   home() {
     this.router.navigate(['/']);
+  }
+  toggleTheme() {
+    this.themeService.updateTheme();
   }
 }
