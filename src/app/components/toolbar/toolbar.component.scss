@@ -1,4 +1,7 @@
-
+.title{
+  flex: 1;
+  padding: 0 16px;
+}
 .toolbar {
   position: fixed;
   top: 0;
@@ -6,7 +9,6 @@
   width: 100vw;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding: 8px 16px;
   z-index: 1000;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);

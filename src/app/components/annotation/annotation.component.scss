@@ -2,9 +2,11 @@
   position: relative;
   display: flex;
   justify-content: center;
+  cursor: crosshair;
   img {
     max-width: 100%;
   }
+
 }
 
 .annotation {
