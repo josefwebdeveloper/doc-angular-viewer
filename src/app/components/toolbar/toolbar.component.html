@@ -1,7 +1,9 @@
 <mat-toolbar class="toolbar" color="primary">
-  <button mat-icon-button (click)="home()">
-    <mat-icon>home</mat-icon>
-  </button>
+  @if (zoomLevel()) {
+    <button mat-icon-button (click)="home()">
+      <mat-icon>home</mat-icon>
+    </button>
+  }
   <span class="title">{{ name() }}</span>
   <button class="mr1" (click)="toggleTheme()" mat-icon-button>
     @if (themeService.themeSignal() === 'dark') {
