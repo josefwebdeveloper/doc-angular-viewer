@@ -9,6 +9,8 @@ import {DocumentService} from "../../services/document.service";
 import {AnnotationService} from "../../services/annotation.service";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {Subscription} from "rxjs";
+import {MatBottomSheet} from "@angular/material/bottom-sheet";
+import {AnnotationSheetComponent} from "../../components/annotation-sheet/annotation-sheet.component";
 
 @Component({
   selector: 'app-document-viewer',
@@ -24,6 +26,7 @@ export class DocumentViewerComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private documentService = inject(DocumentService);
   private annotationService = inject(AnnotationService);
+  private bottomSheet = inject(MatBottomSheet);
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -46,9 +49,12 @@ export class DocumentViewerComponent implements OnInit, OnDestroy {
   }
 
   saveAnnotations(): void {
-    console.log('Annotations saved:', {document: this.document, annotations: this.annotationService.getAnnotations()});
+    const data = { document: this.document, annotations: this.annotationService.getAnnotations() };
+    this.bottomSheet.open(AnnotationSheetComponent, {
+      data: data
+    });
+    console.log('Annotations saved:', data);
   }
-
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
