@@ -5,7 +5,7 @@
     </button>
   }
   <span class="title">{{ name() }}</span>
-  <button class="mr1" (click)="toggleTheme()" mat-icon-button>
+  <button class="menu-item" (click)="toggleTheme()" mat-icon-button>
     @if (themeService.themeSignal() === 'dark') {
       <mat-icon>bedtime</mat-icon>
     } @else {
@@ -16,10 +16,10 @@
     <button mat-icon-button (click)="zoomOut.emit()">
       <mat-icon>remove</mat-icon>
     </button>
-    <button class="ml1 " mat-icon-button (click)="zoomIn.emit()">
+    <button class="menu-item " mat-icon-button (click)="zoomIn.emit()">
       <mat-icon>add</mat-icon>
     </button>
-    <span class="ml1 ">{{ zoomLevel() }}%</span>
-    <button class="ml1 mr1" mat-button (click)="saveAnnotations.emit()">Save</button>
+    <span class="menu-item ">{{ zoomLevel() }}%</span>
+    <button class="menu-item" mat-button (click)="saveAnnotations.emit()">Save</button>
   }
 </mat-toolbar>
