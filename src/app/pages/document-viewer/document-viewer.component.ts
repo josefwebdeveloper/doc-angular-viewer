@@ -1,6 +1,6 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
-import { CommonModule } from '@angular/common';
+import {Component, inject, OnInit} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
+import {CommonModule} from '@angular/common';
 
 import {ToolbarComponent} from "../../components/toolbar/toolbar.component";
 import {AnnotationComponent} from "../../components/annotation/annotation.component";
@@ -37,26 +37,15 @@ export class DocumentViewerComponent implements OnInit {
   }
 
   zoomOut(): void {
+    if (this.zoomLevel === 10) {
+      return
+    }
     this.zoomLevel -= 10;
   }
 
   saveAnnotations(): void {
-    console.log('Annotations saved:', { document: this.document, annotations: this.annotationService.getAnnotations() });
+    console.log('Annotations saved:', {document: this.document, annotations: this.annotationService.getAnnotations()});
   }
 
-  onFileSelected(event: any, pageIndex: number): void {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        const imageUrl = e.target.result;
-        this.addImageAnnotation(imageUrl, pageIndex);
-      };
-      reader.readAsDataURL(file);
-    }
-  }
 
-  addImageAnnotation(imageUrl: string, pageIndex: number): void {
-    this.annotationService.addAnnotation({ type: 'image', imageUrl, x: 50, y: 50, pageIndex });
-  }
 }

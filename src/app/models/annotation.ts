@@ -1,9 +1,9 @@
 export interface Annotation {
-  type: string,
-  text?: string,
-  imageUrl?: string,
-  x: number,
-  y: number,
-  pageIndex: number
+  id: string;
+  type: 'text' | 'image';
+  text?: string;
+  imageUrl?: string;
+  x: number;
+  y: number;
+  pageIndex: number;
 }
-

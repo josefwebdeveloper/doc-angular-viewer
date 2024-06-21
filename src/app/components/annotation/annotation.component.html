@@ -4,11 +4,11 @@
   <div *ngFor="let annotation of getAnnotationsForPage(pageIndex); let i = index"
        class="annotation" [ngClass]="annotation.type === 'image'? 'annotation-image': 'annotation-text'"
        [ngStyle]="{'left': annotation.x + '%', 'top': annotation.y + '%'}"
-       cdkDrag [cdkDragData]="i" (cdkDragEnded)="onDragEnd($event, i)">
+       cdkDrag [cdkDragData]="annotation.id" (cdkDragEnded)="onDragEnd($event, annotation.id)">
     <ng-container [ngSwitch]="annotation.type">
       <div *ngSwitchCase="'text'">{{ annotation.text }}</div>
       <img *ngSwitchCase="'image'" [src]="annotation.imageUrl" class="annotation-image" alt="image">
     </ng-container>
-    <button (click)="removeAnnotation(i)">X</button>
+    <button (click)="removeAnnotation(annotation.id)">X</button>
   </div>
 </div>

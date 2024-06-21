@@ -17,9 +17,7 @@ export class ToolbarComponent {
   @Output() zoomIn = new EventEmitter<void>();
   @Output() zoomOut = new EventEmitter<void>();
   @Output() saveAnnotations = new EventEmitter<void>();
-  @Output() fileSelected = new EventEmitter<any>();
 
-  onFileSelected(event: any): void {
-    this.fileSelected.emit(event);
-  }
+
+
 }

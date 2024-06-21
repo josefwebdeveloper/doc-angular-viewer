@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import {Annotation} from "../models/annotation";
-
-
+import { Annotation } from '../models/annotation';
 
 @Injectable({
   providedIn: 'root'
@@ -16,19 +14,22 @@ export class AnnotationService {
   }
 
   addAnnotation(annotation: Annotation): void {
+    annotation.id = this.generateUniqueId();
     const annotations = this.annotationsSubject.value;
     this.annotationsSubject.next([...annotations, annotation]);
   }
 
-  updateAnnotation(index: number, annotation: Annotation): void {
-    const annotations = this.annotationsSubject.value;
-    annotations[index] = annotation;
-    this.annotationsSubject.next([...annotations]);
+  updateAnnotation(id: string, annotation: Annotation): void {
+    const annotations = this.annotationsSubject.value.map(a => a.id === id ? annotation : a);
+    this.annotationsSubject.next(annotations);
   }
 
-  removeAnnotation(index: number): void {
-    const annotations = this.annotationsSubject.value;
-    annotations.splice(index, 1);
-    this.annotationsSubject.next([...annotations]);
+  removeAnnotation(id: string): void {
+    const annotations = this.annotationsSubject.value.filter(a => a.id !== id);
+    this.annotationsSubject.next(annotations);
+  }
+
+  private generateUniqueId(): string {
+    return Math.random().toString(36).substr(2, 9);
   }
 }

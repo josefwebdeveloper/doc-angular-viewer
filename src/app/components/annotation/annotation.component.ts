@@ -5,12 +5,12 @@ import {AnnotationService} from '../../services/annotation.service';
 import {Annotation} from "../../models/annotation";
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {AnnotationDialogComponent} from '../annotation-dialog/annotation-dialog.component';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-annotation',
   standalone: true,
   imports: [CommonModule, DragDropModule, CdkDrag, MatDialogModule],
-
   templateUrl: './annotation.component.html',
   styleUrls: ['./annotation.component.scss'],
 })
@@ -59,7 +59,7 @@ export class AnnotationComponent implements OnInit {
     const y = ((event.clientY - rect.top) / rect.height) * 100;
     const text = prompt('Enter annotation text:');
     if (text) {
-      this.annotationService.addAnnotation({ type: 'text', text, x, y, pageIndex });
+      this.annotationService.addAnnotation({ id: uuidv4(), type: 'text', text, x, y, pageIndex });
     }
   }
 
@@ -76,7 +76,7 @@ export class AnnotationComponent implements OnInit {
         const reader = new FileReader();
         reader.onload = (e: any) => {
           const imageUrl = e.target.result;
-          this.annotationService.addAnnotation({ type: 'image', imageUrl, x, y, pageIndex });
+          this.annotationService.addAnnotation({ id: uuidv4(), type: 'image', imageUrl, x, y, pageIndex });
         };
         reader.readAsDataURL(file);
       }
@@ -84,11 +84,11 @@ export class AnnotationComponent implements OnInit {
     fileInput.click();
   }
 
-  removeAnnotation(index: number): void {
-    this.annotationService.removeAnnotation(index);
+  removeAnnotation(id: string): void {
+    this.annotationService.removeAnnotation(id);
   }
 
-  onDragEnd(event: CdkDragEnd, index: number): void {
+  onDragEnd(event: CdkDragEnd, id: string): void {
     const element: HTMLElement = event.source.element.nativeElement;
     const parentElement = element.parentElement as HTMLElement;
     const parentRect = parentElement.getBoundingClientRect();
@@ -97,8 +97,10 @@ export class AnnotationComponent implements OnInit {
     const x = ((elementRect.left - parentRect.left) / parentRect.width) * 100;
     const y = ((elementRect.top - parentRect.top) / parentRect.height) * 100;
 
-    const annotation = this.annotations[index];
-    this.annotationService.updateAnnotation(index, { ...annotation, x, y });
+    const annotation = this.annotations.find(a => a.id === id);
+    if (annotation) {
+      this.annotationService.updateAnnotation(id, { ...annotation, x, y });
+    }
   }
 
   getAnnotationsForPage(pageIndex: number) {
