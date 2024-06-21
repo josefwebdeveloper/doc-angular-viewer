@@ -30,7 +30,6 @@ export class DocumentViewerComponent implements OnInit, OnDestroy {
     if (id) {
       this.documentService.getDocument(id).subscribe(data => {
         this.document = data;
-        console.log('Document loaded:', this.document)
       });
     }
   }
